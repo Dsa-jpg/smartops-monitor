@@ -6,7 +6,3 @@
 ![Docker](https://img.shields.io/badge/Deployment-Docker%20%7C%20Cloud-blue)
 ![CI](https://img.shields.io/github/actions/workflow/status/Dsa-jpg/smartops-monitor/ci.yml)
 
-
-## License
-
-This project is under [MIT license](LICENSE).
