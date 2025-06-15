@@ -7,6 +7,6 @@
 ![CI](https://img.shields.io/github/actions/workflow/status/Dsa-jpg/smartops-monitor/ci.yml)
 
 
-## Licence
+## License
 
 This project is under [MIT license](LICENSE).
