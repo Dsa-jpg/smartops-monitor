@@ -1,2 +1,7 @@
 fastapi
 uvicorn
+SQLAlchemy
+pydantic[email]
+dotenv
+psycopg2-binary
+passlib
