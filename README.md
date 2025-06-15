@@ -9,4 +9,4 @@
 
 ## Licence
 
-This project is under [MIT licence](LICENSE).
+This project is under [MIT license](LICENSE).
