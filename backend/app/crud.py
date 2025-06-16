@@ -27,6 +27,47 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
+# --- Services ---
+def get_service(db: Session, service_id: int):
+    return db.query(models.Service).filter(models.Service.id == service_id).first()
+
+def get_services_by_id(db: Session, user_id: int, skip: int = 0, limit: int = 100):
+    return (
+        db.query(models.Service)
+        .filter(models.Service.owner_id == user_id)
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+
+def create_service(db: Session, service_in: schemas.ServiceCreate, user: models.User) -> models.Service:
+    service = models.Service(**service_in.dict(), owner_id=user.id)
+    db.add(service)
+    db.commit()
+    db.refresh(service)
+    return service
+
+# --- Alerts ---
+def get_alert(db: Session, alert_id: int):
+    return db.query(models.Alert).filter(models.Alert.id == alert_id).first()
+
+def get_alerts(db: Session, user_id = int):
+    return (
+        db.query(models.Alert)
+        .join(models.Service)
+        .filter(models.Service.owner_id == user_id)
+        .all()
+    )
+
+def create_alert(db: Session, alert_in: schemas.AlertCreated) -> models.Alert:
+    alert = models.Alert(**alert_in.dict())
+    db.add(alert)
+    db.commit()
+    db.refresh(alert)
+    return alert
+
+
+
 # --- Auth/Login ---
 def hash_pass(password: str):
     return pwd_context.hash(password)
