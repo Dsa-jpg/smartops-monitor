@@ -3,3 +3,4 @@ venv/
 ._*
 
 __pycache__/
+docker-compose-copy.yml
