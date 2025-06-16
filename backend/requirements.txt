@@ -5,3 +5,6 @@ pydantic[email]
 dotenv
 psycopg2-binary
 passlib
+pyjwt
+python-jose[cryptography]
+python-multipart
