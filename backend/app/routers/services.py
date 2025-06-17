@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status, Body
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -21,3 +21,25 @@ def create_service(
 @router.get("/",response_model=List[schemas.ServiceRead])
 def read_services(skip: int, limit: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     return crud.get_services_by_id(db=db, user_id=current_user.id, skip=skip, limit=limit)
+
+
+@router.delete("/{service_id}", response_model=schemas.ServiceRead)
+def delete_service(service_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    service = db.query(models.Service).filter_by(id=service_id, owner_id=current_user.id).first()
+    if service is None:
+        raise HTTPException(status_code=404, detail="Service not found or not owned by current user")
+    db.delete(service)
+    db.commit()
+    return Response(status_code=204)
+
+@router.patch("/{service_id}", response_model=schemas.ServiceRead)
+def update_service(service_id: int,service_in: schemas.ServiceUpdate , db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    service = db.query(models.Service).filter_by(id=service_id, owner_id=current_user.id).first()
+    if not service:
+        raise HTTPException(status_code=404, detail="Service not found or not owned by current user")
+    for key, value in service_in.model_dump(exclude_unset=True).items():
+        setattr(service, key, value)
+    db.commit()
+    db.refresh(service)
+    return service
+   
