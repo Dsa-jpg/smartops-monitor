@@ -19,6 +19,10 @@ class AlertRead(AlertBase):
     class Config:
         from_atrributes = True
 
+class AlertUpdate(BaseModel):
+    level: Optional[str] = None
+    message: Optional[str] = None
+
 # --- Service ---
 
 class ServiceBase(BaseModel):
@@ -35,6 +39,11 @@ class ServiceRead(ServiceBase):
 
     class Config:
         from_atrributes = True
+
+class ServiceUpdate(BaseModel):
+    name : Optional[str] = None
+    url : Optional[str] = None
+    status: Optional[str] = None
 
 # --- User ---
 class UserBase(BaseModel):

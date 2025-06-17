@@ -23,7 +23,7 @@ class Service(Base):
 
     owner_id = Column(Integer, ForeignKey("users.id"))  
     owner = relationship("User", back_populates="services")  
-    alerts = relationship("Alert", back_populates="service")
+    alerts = relationship("Alert", back_populates="service", cascade="all, delete-orphan")
 
 
 class Alert(Base):
@@ -34,5 +34,5 @@ class Alert(Base):
     level = Column(String, nullable=False)
     message = Column(Text, nullable=False)
 
-    service_id = Column(Integer, ForeignKey("services.id"))
+    service_id = Column(Integer, ForeignKey("services.id",ondelete="CASCADE"), nullable=False)
     service = relationship("Service", back_populates="alerts")
