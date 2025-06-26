@@ -47,6 +47,26 @@ def create_service(db: Session, service_in: schemas.ServiceCreate, user: models.
     db.refresh(service)
     return service
 
+def update_service_status(db: Session, service_id: int, status_code: int):
+    service = get_service(db, service_id)
+    if service:
+        service.status = status_code
+        db.commit()
+        db.refresh(service)
+
+
+
+def add_service_status_history(db: Session, service_id: int, status_code: int):
+    history_entry = models.ServiceStatusHistory(
+        service_id=service_id,
+        status=status_code,
+        timestamp=datetime.utcnow()
+    )
+    db.add(history_entry)
+    db.commit()
+    db.refresh(history_entry)
+    return history_entry
+
 # --- Alerts ---
 def get_alert(db: Session, alert_id: int):
     return db.query(models.Alert).filter(models.Alert.id == alert_id).first()

@@ -8,3 +8,5 @@ passlib
 pyjwt
 python-jose[cryptography]
 python-multipart
+celery[redis]
+requests

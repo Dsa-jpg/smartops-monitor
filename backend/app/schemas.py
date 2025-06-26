@@ -34,7 +34,7 @@ class ServiceCreate(ServiceBase):
 
 class ServiceRead(ServiceBase):
     id: int
-    status: Optional[str]
+    status: Optional[int]
     alerts: List[AlertRead] = []
 
     class Config:
@@ -43,7 +43,7 @@ class ServiceRead(ServiceBase):
 class ServiceUpdate(BaseModel):
     name : Optional[str] = None
     url : Optional[str] = None
-    status: Optional[str] = None
+    status: Optional[int] = None
 
 # --- User ---
 class UserBase(BaseModel):
