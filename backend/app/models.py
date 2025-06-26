@@ -19,11 +19,22 @@ class Service(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
     url = Column(String, nullable=False)
-    status = Column(String, default="unknown")
+    status = Column(Integer, default=0)
 
     owner_id = Column(Integer, ForeignKey("users.id"))  
     owner = relationship("User", back_populates="services")  
     alerts = relationship("Alert", back_populates="service", cascade="all, delete-orphan")
+    status_history = relationship("ServiceStatusHistory", back_populates="service", cascade="all, delete-orphan")
+
+class ServiceStatusHistory(Base):
+    __tablename__ = "service_status_history"
+    id = Column(Integer, primary_key=True, index=True)
+    service_id = Column(Integer, ForeignKey("services.id", ondelete="CASCADE"))
+    status = Column(Integer)
+    timestamp = Column(DateTime, default=func.now())
+
+    service = relationship("Service", back_populates="status_history")
+
 
 
 class Alert(Base):
