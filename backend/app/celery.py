@@ -3,8 +3,8 @@ from celery.schedules import crontab
 
 celery = Celery(
     "smartops",
-    broker="redis://:JFqSmnrkvuBpAsj1khkaePqumZUT3wET@redis-13080.c135.eu-central-1-1.ec2.redns.redis-cloud.com:13080/0", 
-    backend="redis://:JFqSmnrkvuBpAsj1khkaePqumZUT3wET@redis-13080.c135.eu-central-1-1.ec2.redns.redis-cloud.com:13080/0")
+    broker="redis://:#################@redis-13080.c135.eu-central-1-1.ec2.redns.redis-cloud.com:13080/0", 
+    backend="redis://#################@redis-13080.c135.eu-central-1-1.ec2.redns.redis-cloud.com:13080/0")
 
 
 celery.conf.beat_schedule = {
